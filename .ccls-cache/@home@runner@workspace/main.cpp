@@ -1,39 +1,28 @@
 #include <iostream>
-#include <fstream>
-#include <string>
 using namespace std;
 
 int main() {
-    string townName, fileName;
-    int year, population;
+    const int TOTAL_ROWS = 10;
 
-    // Get user input
-    cout << "Enter the name of the town: ";
-    getline(cin, townName);
-
-    cout << "Enter the name of the data file (e.g., People.txt): ";
-    cin >> fileName;
-
-    // Open file
-    ifstream inputFile(fileName);
-    if (!inputFile) {
-        cout << "Error: Could not open file " << fileName << endl;
-        return 1;
-    }
-
-    // Display title
-    cout << "\n" << townName << " Population Growth" << endl;
-    cout << "(each * represents 1,000 people)\n" << endl;
-
-    // Read and display data
-    while (inputFile >> year >> population) {
-        cout << year << " ";
-        for (int i = 0; i < population; i++) {
-            cout << "*";
+    // Pattern A - Increasing
+    cout << "Pattern A" << endl;
+    for (int i = 1; i <= TOTAL_ROWS; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << "+";
         }
         cout << endl;
     }
 
-    inputFile.close();
+    cout << endl;
+
+    // Pattern B - Decreasing
+    cout << "Pattern B" << endl;
+    for (int i = TOTAL_ROWS; i >= 1; i--) {
+        for (int j = 1; j <= i; j++) {
+            cout << "+";
+        }
+        cout << endl;
+    }
+
     return 0;
 }
