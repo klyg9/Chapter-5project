@@ -4,35 +4,36 @@
 using namespace std;
 
 int main() {
-    ifstream inputFile("LineUp.txt");
-    string name, first, last;
-    int count = 0;
+    string townName, fileName;
+    int year, population;
 
+    // Get user input
+    cout << "Enter the name of the town: ";
+    getline(cin, townName);
+
+    cout << "Enter the name of the data file (e.g., People.txt): ";
+    cin >> fileName;
+
+    // Open file
+    ifstream inputFile(fileName);
     if (!inputFile) {
-        cout << "Error: Could not open LineUp.txt" << endl;
+        cout << "Error: Could not open file " << fileName << endl;
         return 1;
     }
 
-    // Read the first name to initialize comparisons
-    inputFile >> name;
-    if (inputFile) {
-        first = last = name;
-        count = 1;
-    }
+    // Display title
+    cout << "\n" << townName << " Population Growth" << endl;
+    cout << "(each * represents 1,000 people)\n" << endl;
 
-    // Read the rest of the names
-    while (inputFile >> name) {
-        count++;
-        if (name < first) first = name;
-        if (name > last) last = name;
+    // Read and display data
+    while (inputFile >> year >> population) {
+        cout << year << " ";
+        for (int i = 0; i < population; i++) {
+            cout << "*";
+        }
+        cout << endl;
     }
 
     inputFile.close();
-
-    // Output the results
-    cout << "Number of students: " << count << endl;
-    cout << "First in line: " << first << endl;
-    cout << "Last in line: " << last << endl;
-
     return 0;
 }
