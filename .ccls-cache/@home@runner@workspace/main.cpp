@@ -1,42 +1,38 @@
 #include <iostream>
-#include <iomanip>
+#include <fstream>
+#include <string>
 using namespace std;
 
 int main() {
-    int startSize, days;
-    double dailyIncrease;
+    ifstream inputFile("LineUp.txt");
+    string name, first, last;
+    int count = 0;
 
-    // Get and validate starting population size
-    cout << "Enter starting number of organisms (min 2): ";
-    cin >> startSize;
-    while (startSize < 2) {
-        cout << "Invalid. Must be at least 2: ";
-        cin >> startSize;
+    if (!inputFile) {
+        cout << "Error: Could not open LineUp.txt" << endl;
+        return 1;
     }
 
-    // Get and validate average daily increase (percent)
-    cout << "Enter average daily population increase (in %): ";
-    cin >> dailyIncrease;
-    while (dailyIncrease < 0) {
-        cout << "Invalid. Cannot be negative: ";
-        cin >> dailyIncrease;
+    // Read the first name to initialize comparisons
+    inputFile >> name;
+    if (inputFile) {
+        first = last = name;
+        count = 1;
     }
 
-    // Get and validate number of days
-    cout << "Enter number of days organisms will multiply (min 1): ";
-    cin >> days;
-    while (days < 1) {
-        cout << "Invalid. Must be at least 1: ";
-        cin >> days;
+    // Read the rest of the names
+    while (inputFile >> name) {
+        count++;
+        if (name < first) first = name;
+        if (name > last) last = name;
     }
 
-    // Display population size for each day
-    double population = startSize;
-    cout << fixed << setprecision(2);
-    for (int day = 1; day <= days; day++) {
-        cout << "Day " << day << ": " << population << " organisms" << endl;
-        population += (population * dailyIncrease / 100);
-    }
+    inputFile.close();
+
+    // Output the results
+    cout << "Number of students: " << count << endl;
+    cout << "First in line: " << first << endl;
+    cout << "Last in line: " << last << endl;
 
     return 0;
 }
